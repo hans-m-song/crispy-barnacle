@@ -2,7 +2,7 @@ CC = gc
 BUILD := release
 flags.test := -DTEST -std=c99 -Wall -pedantic -g
 flags.verbose := -DVERBOSE -DTEST -std=c99 -Wall -pedantic -g
-flags.test := -std=c99 -Wall -pedantic
+flags.release := -std=c99 -Wall -pedantic
 FLAGS := ${flags.${BUILD}}
 OBJ = core.o init.o err.o
 
