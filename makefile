@@ -8,8 +8,6 @@ OBJ = err.o net.o
 NODE = node.o $(OBJ)
 server = server.o $(OBJ)
 
-
-
 .PHONY: all
 
 all: node 
