@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "err.h"
 
 void err_msg(Err e, FILE* f) {
@@ -8,18 +9,27 @@ void err_msg(Err e, FILE* f) {
             free(str);
             return;
         case E_HASHMISMATCH:
-            str = "hash mismatch"
+            str = "hash mismatch";
             break;
         case E_TIMESTAMPMISMATCH:
-            str = "timestamp mismatch"
+            str = "timestamp mismatch";
             break;
         case E_BADPAYLOAD:
-            str = "bad payload received"
+            str = "bad payload received";
+            break;
+        case E_GETPORT:
+            str = "error when getting port";
+            break;
+        case E_OPENPORT:
+            str = "error when openning port";
+            break;
+        case E_CONNECTTO:
+            str = "error connecting to port";
             break;
         default:
-            str = "unknown error"
+            str = "unknown error";
             break;
     }
-    fprintf(f, str);
+    fprintf(f, "%s\n", str);
     fflush(f);
 }

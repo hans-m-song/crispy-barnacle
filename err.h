@@ -2,7 +2,6 @@
 #define ERR_H
 
 typedef enum {
-    OK,
     ACK,
     NACK
 } Com;
@@ -11,5 +10,12 @@ typedef enum {
     OK,
     E_HASHMISMATCH,
     E_TIMESTAMPMISMATCH,
-    E_BADPAYLOAD
+    E_BADPAYLOAD,
+    E_GETPORT,
+    E_OPENPORT,
+    E_CONNECTTO
 } Err;
+
+void err_msg(FILE* f, Err e);
+
+#endif
