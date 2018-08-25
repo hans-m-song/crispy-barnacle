@@ -13,9 +13,10 @@ typedef enum {
     E_BADPAYLOAD,
     E_GETPORT,
     E_OPENPORT,
-    E_CONNECTTO
+    E_CONNECTTO,
+    E_MEMALLOC
 } Err;
 
-void err_msg(FILE* f, Err e);
+void err_msg(Err e, FILE* f);
 
 #endif

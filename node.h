@@ -3,24 +3,13 @@
 
 #include <time.h>
 
+#define MAX_BUFF 90
+
 typedef struct {
     char* name;
     unsigned long hash;
-    int pubKey;
-    int privKey;
+    unsigned long pubKey;
+    unsigned long privKey;
 } User;
-
-typedef struct {
-    int index;
-    unsigned long prevHash;
-    unsigned long hash;
-    time_t timestamp;
-    char** payload;
-} Block;
-
-typedef struct {
-    int index;
-    Block* blocks;
-} Chain;
 
 #endif

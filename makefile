@@ -4,19 +4,17 @@ flags.test := -DTEST -std=c99 -Wall -pedantic -g
 flags.verbose := -DVERBOSE -DTEST -std=c99 -Wall -pedantic -g
 flags.release := -std=c99 -Wall -pedantic
 FLAGS := $(flags.$(BUILD))
-OBJ = err.o net.o block.o
-NODE = node.o $(OBJ)
-server = server.o $(OBJ)
+OBJ = err.o net.o block.o common.o
 
 .PHONY: all
 
 all: node 
 	@echo BUILD=$(BUILD)
 
-node: $(NODE)
+node: $(OBJ) node.o
 	$(CC) $(FLAGS) $(OBJ) node.o -o node
 
-server: $(SERVER)
+server: $(OBJ) server.o
 	$(CC) $(FLAGS) $(OBJ) server.o -o server
 
 %.o: %.c

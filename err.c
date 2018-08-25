@@ -26,6 +26,9 @@ void err_msg(Err e, FILE* f) {
         case E_CONNECTTO:
             str = "error connecting to port";
             break;
+        case E_MEMALLOC:
+            str = "error allocating memory";
+            break;
         default:
             str = "unknown error";
             break;
