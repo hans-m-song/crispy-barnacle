@@ -7,14 +7,14 @@
 #define LOAD_MAX 2
 
 typedef struct {
-    time_t timestamp;
+    struct tm* timeStamp;
     char* data;
 } Load;
 
 typedef struct {
     unsigned long prevHash;
     unsigned long hash;
-    time_t timestamp;
+    struct tm* timeStamp;
     Load** l;
     int loadCount;
 } Block;
@@ -30,6 +30,6 @@ void destroy_chain(Chain* c);
 
 Err save_msg(Chain* c, char* msg);
 
-void print_block(Chain* c);
+void print_block(Block* b);
 
 #endif

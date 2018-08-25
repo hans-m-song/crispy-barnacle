@@ -49,13 +49,14 @@ Err get_input(User* u, Chain* c) {
             if(str == NULL || strcmp(str, "q") == 0) {
                 // cancel message, destoy load?
                 return OK;
-            } else if(strcmp(str, "print") == 0) {
-                printf("print the block\n");
-            }
-            
-            e = save_msg(c, str);
-            if(e != OK) {
-                return e;
+            } else if(strcmp(str, "p") == 0) {
+                printf("requested log of block %d\n", c->index);
+                print_block(c->blocks[c->index]);
+            } else {            
+                e = save_msg(c, str);
+                if(e != OK) {
+                    return e;
+                }
             }
         }
     }

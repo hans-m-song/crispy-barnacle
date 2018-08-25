@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include "common.h"
 
 int get_line(char** str, int* size, FILE* f) {
     char line[256];
@@ -34,4 +36,10 @@ int get_line(char** str, int* size, FILE* f) {
 
     strcpy(*str, line);
     return len;
+}
+
+void get_time(struct tm* timeStamp) {
+    time_t rawTime;
+    time(&rawTime);
+    timeStamp = localtime(&rawTime);
 }

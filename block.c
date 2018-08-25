@@ -4,6 +4,7 @@
 #include <time.h>
 #include "err.h"
 #include "block.h"
+#include "common.h"
 
 unsigned long hash_block(Block* b) {
     unsigned long hash = 5381;
@@ -47,20 +48,21 @@ Err init_block(Chain* c, int index) {
         return E_MEMALLOC;
     }
     
+    c->blocks[c->index]->loadCount = 0;
     Err e = init_load(c->blocks[c->index]);
 
-    return OK;
+    return e;
 }
 
 Err genesis_block(Block* b) {
     b->prevHash = 0;
-    b->timestamp = 0;
+    get_time(b->timeStamp);
 
     if(init_load(b) != OK) {
         return E_MEMALLOC;
     }
 
-    b->l[0]->timestamp = 0;
+    get_time(b->l[0]->timeStamp);
     b->l[0]->data = "hello world";
     b->loadCount++;
 
@@ -88,10 +90,14 @@ Err init_chain(Chain* c) {
 
 Err save_msg(Chain* c, char* msg) {
     if(c->blocks[c->index]->loadCount == LOAD_MAX) {
+#ifdef TEST
+        printf("block size exceeded, generating new block\n");
+#endif
         init_block(c, ++c->index);
     }
+
     int loadCount = c->blocks[c->index]->loadCount;
-    c->blocks[c->index]->l[loadCount]->timestamp = time(NULL);
+    get_time(c->blocks[c->index]->l[loadCount]->timeStamp);
     c->blocks[c->index]->l[loadCount]->data = (char*)malloc(sizeof(char)*strlen(msg) + 1);
     if(!c->blocks[c->index]->l[loadCount]->data) {
         return E_MEMALLOC;
@@ -102,4 +108,12 @@ Err save_msg(Chain* c, char* msg) {
     return OK;
 }
 
-void print_block(Chain* c);
+void print_block(Block* b) {
+    char buffer[26];
+    strftime(buffer, 26, "%Y-%m-%d-%H-%M-%S", b->timeStamp), 
+    printf("Block: %s\n", buffer);
+    for(int i = 0; i < b->loadCount; i++) {
+        strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", b->l[i]->timeStamp);
+        printf("%s|%s\n", buffer, b->l[i]->data);
+    }
+}
